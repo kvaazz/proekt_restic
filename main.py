@@ -29,8 +29,6 @@ def load_user(user_id):
 
 @app.route('/')
 def page():
-    if flask_login.current_user.is_authenticated:
-        return render_template('user_page.html')
     return render_template('first_page.html')
 
 
