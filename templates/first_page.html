@@ -9,20 +9,134 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <style>
+        html, body {
+            height: 100%;
+            overflow: hidden;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar {
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            padding: 15px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .navbar-brand {
+            font-size: 24px;
+            font-weight: bold;
+            color: #ffc107 !important;
+        }
+
+        .nav-link {
+            color: white !important;
+            margin-left: 20px;
+            transition: color 0.3s;
+        }
+
+        .nav-link:hover {
+            color: #ffc107 !important;
+        }
+
+        .btn-register {
+            background-color: #ffc107;
+            color: black;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+
+        .btn-register:hover {
+            background-color: #e0a800;
+        }
+
+        .btn-login {
+            border: 2px solid #ffc107;
+            color: #ffc107;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+
+        .btn-login:hover {
+            background-color: #ffc107;
+            color: black;
+        }
+
         .hero-container {
             height: 100vh;
-            background: <img src="static/img/restaurant-interior.jpg>" center/cover no-repeat;
+            background: url('{{ url_for("static", filename="img/restaurant-interior.jpg") }}') center/cover no-repeat;
+            position: relative;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            padding-top: 150px;
+        }
+
+        .hero-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.4);
+            z-index: 1;
+        }
+
+        .restaurant-name {
+            position: relative;
+            z-index: 2;
+            text-align: center;
         }
 
         .restaurant-name h1 {
             font-size: 150px;
             color: white;
+            text-shadow: 2px 2px 4px #000000;
+            text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.8);
+            margin: 0;
+            font-weight: bold;
+            letter-spacing: 5px;
         }
+
     </style>
 </head>
 <body>
 
-    <div class="hero-container d-flex align-items-center justify-content-center">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">🍽️ TIMMI</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Главная</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/menu">Меню</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/about">О нас</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/contacts">Контакты</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-register btn-sm" href="/register">Зарегистрироваться</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-login btn-sm" href="/login">Войти</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="hero-container">
         <div class="restaurant-name">
             <h1>TIMMI</h1>
         </div>
