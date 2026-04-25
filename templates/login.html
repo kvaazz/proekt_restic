@@ -1,29 +1,181 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>Авторизация</h1>
-    <form action="" method="post">
-        {{ form.hidden_tag() }}
-        <p>
-            {{ form.email.label }}<br>
-            {{ form.email(class="form-control", type="email") }}<br>
-            {% for error in form.email.errors %}
+<style>
+    .html, body {
+        overflow: hidden;
+        height: 100%;
+        }
+
+    .auth-container {
+        height: calc(100vh - 80px);
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .auth-container::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 1;
+    }
+
+    .auth-card {
+        position: relative;
+        z-index: 2;
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 15px;
+        padding: 40px;
+        width: 100%;
+        max-width: 450px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        border: 2px solid #ffc107;
+    }
+
+    .auth-card h1 {
+        text-align: center;
+        color: #2c1810;
+        font-weight: bold;
+        margin-bottom: 30px;
+        font-size: 28px;
+    }
+
+    .form-label {
+        color: #2c1810;
+        font-weight: 600;
+        margin-bottom: 10px;
+    }
+
+    .form-control {
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 12px 15px;
+        margin-bottom: 15px;
+        font-size: 16px;
+        transition: border-color 0.3s;
+    }
+
+    .form-control:focus {
+        border-color: #ffc107;
+        box-shadow: 0 0 0 0.2rem rgba(255, 193, 7, 0.25);
+    }
+
+    .btn-submit {
+        background-color: #ffc107;
+        color: #2c1810;
+        border: none;
+        padding: 12px 30px;
+        font-weight: bold;
+        border-radius: 8px;
+        width: 100%;
+        font-size: 16px;
+        transition: background-color 0.3s;
+        margin-top: 10px;
+    }
+
+    .btn-submit:hover {
+        background-color: #e0a800;
+        color: #2c1810;
+    }
+
+    .form-check {
+        margin-bottom: 20px;
+    }
+
+    .form-check-label {
+        color: #2c1810;
+        font-weight: 500;
+    }
+
+    .alert {
+        border-radius: 8px;
+        border: none;
+        margin-bottom: 15px;
+    }
+
+    .alert-danger {
+        background-color: #f8d7da;
+        color: #721c24;
+    }
+
+    .auth-links {
+        text-align: center;
+        margin-top: 20px;
+        color: #2c1810;
+    }
+
+    .auth-links a {
+        color: #ffc107;
+        text-decoration: none;
+        font-weight: 600;
+    }
+
+    .auth-links a:hover {
+        text-decoration: underline;
+    }
+
+    .message {
+        color: #721c24;
+        background-color: #f8d7da;
+        padding: 12px;
+        border-radius: 8px;
+        margin-top: 15px;
+        text-align: center;
+    }
+
+    @media (max-width: 576px) {
+        .auth-card {
+            margin: 20px;
+            padding: 30px 20px;
+        }
+
+        .auth-card h1 {
+            font-size: 24px;
+        }
+    }
+</style>
+
+<div class="auth-container">
+    <div class="auth-card">
+        <h1>Авторизация</h1>
+        <form action="" method="post">
+            {{ form.hidden_tag() }}
+
+            <div class="mb-3">
+                {{ form.email.label(class="form-label") }}
+                {{ form.email(class="form-control", type="email", placeholder="your@email.com") }}
+                {% for error in form.email.errors %}
                 <div class="alert alert-danger" role="alert">
-                    {{ error }}
+                    ⚠️ {{ error }}
                 </div>
-            {% endfor %}
-        </p>
-        <p>
-            {{ form.password.label }}<br>
-            {{ form.password(class="form-control", type="password") }}<br>
-            {% for error in form.password.errors %}
+                {% endfor %}
+            </div>
+
+            <div class="mb-3">
+                {{ form.password.label(class="form-label") }}
+                {{ form.password(class="form-control", type="password", placeholder="••••••••") }}
+                {% for error in form.password.errors %}
                 <div class="alert alert-danger" role="alert">
-                    {{ error }}
+                    ⚠️ {{ error }}
                 </div>
-            {% endfor %}
-        </p>
-        <p>{{ form.remember_me() }} {{ form.remember_me.label }}</p>
-        <p>{{ form.submit(type="submit", class="btn btn-primary") }}</p>
-        <div>{{ message }}</div>
-    </form>
+                {% endfor %}
+            </div>
+
+            {{ form.submit(type="submit", class="btn btn-submit") }}
+
+            {% if message %}
+            <div class="message">⚠️ {{ message }}</div>
+            {% endif %}
+
+            <div class="auth-links">
+                Нет аккаунта? <a href="/register">Зарегистрироваться</a>
+            </div>
+        </form>
+    </div>
+</div>
 {% endblock %}
