@@ -43,7 +43,7 @@ def login():
 
 
 @app.route('/register', methods=['GET', 'POST'])
-def reqister():
+def register():
     form = RegisterForm()
     if form.validate_on_submit():
         if form.password.data != form.password_again.data:
@@ -57,7 +57,7 @@ def reqister():
                                    message="Такой пользователь уже есть")
         user = User()
         user.name = form.name.data
-        user.phone_number = form.address.data
+        user.phone_number = form.phone_number.data
         user.email = form.email.data
         user.set_password(form.password.data)
         print(user)

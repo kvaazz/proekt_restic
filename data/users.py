@@ -15,7 +15,7 @@ class User(SqlAlchemyBase):
     hashed_password = sqlalchemy.Column(sqlalchemy.String, nullable=True)
 
     def __repr__(self):
-        return f"<Colonist> {self.id} {self.surname} {self.name}"
+        return f"Пользователь {self.id} {self.name}"
 
     def set_password(self, password):
         self.hashed_password = generate_password_hash(password)
