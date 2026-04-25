@@ -31,7 +31,6 @@
 
         .nav-link {
             color: white !important;
-            margin-left: 20px;
             transition: color 0.3s;
         }
 
@@ -43,7 +42,6 @@
             background-color: #ffc107;
             color: black;
             font-weight: bold;
-            margin-left: 10px;
         }
 
         .btn-register:hover {
@@ -54,12 +52,22 @@
             border: 2px solid #ffc107;
             color: #ffc107;
             font-weight: bold;
-            margin-left: 10px;
         }
 
         .btn-login:hover {
             background-color: #ffc107;
             color: black;
+        }
+
+        /* Выравнивание кнопок */
+        .navbar-nav .nav-item {
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar-nav .nav-item .btn {
+            margin-top: 0;
+            align-self: center;
         }
 
         .hero-container {
@@ -92,11 +100,29 @@
         .restaurant-name h1 {
             font-size: 150px;
             color: white;
-            text-shadow: 2px 2px 4px #000000;
             text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.8);
             margin: 0;
             font-weight: bold;
             letter-spacing: 5px;
+        }
+
+        /* Адаптивность для мобильных */
+        @media (max-width: 991px) {
+            .navbar-nav .nav-item .btn {
+                margin-top: 10px;
+                margin-left: 0;
+                width: 100%;
+            }
+
+            .restaurant-name h1 {
+                font-size: 80px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .restaurant-name h1 {
+                font-size: 60px;
+            }
         }
 
     </style>
@@ -111,21 +137,24 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
+                <ul class="navbar-nav ms-auto align-items-lg-center">
                     <li class="nav-item">
-                        <a class="nav-link" href="/">Главная</a>
+                        <a class="nav-link px-3" href="/">Главная</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/menu">Меню</a>
+                        <a class="nav-link px-3" href="/menu">Меню</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/about">О нас</a>
+                        <a class="nav-link px-3" href="/about">О нас</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/contacts">Контакты</a>
+                        <a class="nav-link px-3" href="/contacts">Контакты</a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item ms-lg-2">
                         <a class="btn btn-register btn-sm" href="/discountcard">Скидочная карта</a>
+                    </li>
+                    <li class="nav-item ms-lg-2">
+                        <a class="btn btn-login btn-sm" href="/logout">Выйти</a>
                     </li>
                 </ul>
             </div>

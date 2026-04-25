@@ -14,6 +14,13 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 
 
+@app.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    return redirect("/")
+
+
 @login_manager.user_loader
 def load_user(user_id):
     db_sess = db_session.create_session()
