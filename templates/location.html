@@ -1,0 +1,221 @@
+{% extends "base.html" %}
+
+{% block extra_css %}
+<style>
+    main {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: calc(100vh - 80px);
+    }
+
+    .location-container {
+        background: white;
+        border-radius: 15px;
+        padding: 40px;
+        width: 100%;
+        max-width: 1200px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        border: 2px solid #ffc107;
+    }
+
+    .location-container h1 {
+        text-align: center;
+        color: #2c1810;
+        font-weight: 700;
+        margin-bottom: 30px;
+        font-size: 32px;
+    }
+
+    .location-content {
+        display: grid;
+        grid-template-columns: 300px 1fr;
+        gap: 30px;
+        align-items: start;
+    }
+
+    .form-label {
+        color: #2c1810;
+        font-weight: 600;
+        margin-bottom: 10px;
+        display: block;
+    }
+
+    .form-control {
+        border: 1.5px solid #ddd;
+        border-radius: 8px;
+        padding: 12px 15px;
+        font-size: 16px;
+        width: 100%;
+    }
+
+    .form-control:focus {
+        border-color: #ffc107;
+        box-shadow: 0 0 0 0.2rem rgba(255, 193, 7, 0.25);
+    }
+
+    .btn-submit {
+        background-color: #ffc107;
+        color: #2c1810;
+        border: none;
+        font-weight: 600;
+        padding: 12px 30px;
+        border-radius: 8px;
+        font-size: 16px;
+        width: 100%;
+        margin-top: 15px;
+        cursor: pointer;
+        transition: all 0.3s;
+    }
+
+    .btn-submit:hover {
+        background-color: #e0a800;
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(255, 193, 7, 0.3);
+    }
+
+    .map-container {
+        background-color: #f0f0f0;
+        border-radius: 8px;
+        overflow: hidden;
+        height: 500px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .map-container img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+    }
+
+    .location-info {
+        background-color: #f8f9fa;
+        padding: 20px;
+        border-radius: 8px;
+        border-left: 4px solid #ffc107;
+        margin-top: 20px;
+    }
+
+    .location-info h3 {
+        color: #2c1810;
+        font-weight: 600;
+        margin-bottom: 15px;
+        font-size: 18px;
+    }
+
+    .info-item {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 12px;
+        color: #2c1810;
+        font-size: 14px;
+    }
+
+    .info-icon {
+        font-size: 20px;
+        min-width: 25px;
+    }
+
+    .alert {
+        border-radius: 8px;
+        border: none;
+        margin-bottom: 20px;
+    }
+
+    .alert-danger {
+        background-color: #f8d7da;
+        color: #721c24;
+    }
+
+    .alert-success {
+        background-color: #d4edda;
+        color: #155724;
+    }
+
+    @media (max-width: 768px) {
+        .location-container {
+            padding: 30px 20px;
+        }
+
+        .location-content {
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+
+        .location-container h1 {
+            font-size: 28px;
+        }
+
+        .map-container {
+            height: 350px;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .location-container {
+            padding: 25px 15px;
+        }
+
+        .location-container h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .form-control,
+        .btn-submit {
+            font-size: 15px;
+            padding: 11px 12px;
+        }
+
+        .map-container {
+            height: 280px;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="location-container">
+    <h1>📍 Расположение</h1>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ 'danger' if category == 'error' else category }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <div class="location-content">
+        <!-- Форма ввода адреса -->
+        <div>
+            <h3 style="color: #2c1810; font-weight: 600; margin-bottom: 20px; font-size: 20px;">Найти маршрут</h3>
+            <form method="POST">
+                <label class="form-label">Ваш адрес</label>
+                <input type="text" name="address" placeholder="Введите ваш адрес" class="form-control" required>
+                <button type="submit" class="btn-submit">Построить маршрут</button>
+            </form>
+
+            <!-- Информация о ресторане -->
+            <div class="location-info">
+                <h3>🍽️ Наш адрес</h3>
+                <div class="info-item">
+                    <span class="info-icon">📍</span>
+                    <div>
+                        <strong>Великий Новгород</strong><br>
+                        <small>Великолукская улица, 18</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Карта -->
+        <div class="map-container" id="map">
+            <img src="{{ url_for('static', filename='upload/map.png') }}" alt="Карта расположения ресторана">
+        </div>
+    </div>
+</div>
+{% endblock %}
