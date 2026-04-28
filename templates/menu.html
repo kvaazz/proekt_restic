@@ -103,7 +103,7 @@
 
 {% block content %}
 <div class="menu-container">
-    <h1>🍽️ Меню</h1>
+    <h1>{{ menu.title }}</h1>
 
     {% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %}
@@ -116,47 +116,13 @@
     {% endwith %}
 
     <div class="menu-grid">
-        <!-- Паста -->
+        {% for dish in menu.dishes %}
         <div class="menu-item">
-            <div class="menu-item-name">Паста Болоньезе</div>
-            <div class="menu-item-description">Спагетти с мясным соусом и пармезаном</div>
-            <div class="menu-item-price">520 ₽</div>
+            <div class="menu-item-name">{{ dish.name }}</div>
+            <div class="menu-item-description">{{ dish.description }}</div>
+            <div class="menu-item-price">{{ dish.price }} ₽</div>
         </div>
-
-        <!-- Стейк -->
-        <div class="menu-item">
-            <div class="menu-item-name">Стейк Рибай</div>
-            <div class="menu-item-description">Мраморная говядина с овощами гриль</div>
-            <div class="menu-item-price">890 ₽</div>
-        </div>
-
-        <!-- Лосось -->
-        <div class="menu-item">
-            <div class="menu-item-name">Филе лосося</div>
-            <div class="menu-item-description">Лосось на гриле с лимоном и овощами</div>
-            <div class="menu-item-price">750 ₽</div>
-        </div>
-
-        <!-- Салат -->
-        <div class="menu-item">
-            <div class="menu-item-name">Салат Цезарь</div>
-            <div class="menu-item-description">Свежие овощи с курицей и пармезаном</div>
-            <div class="menu-item-price">350 ₽</div>
-        </div>
-
-        <!-- Тирамису -->
-        <div class="menu-item">
-            <div class="menu-item-name">Тирамису</div>
-            <div class="menu-item-description">Классический итальянский десерт</div>
-            <div class="menu-item-price">320 ₽</div>
-        </div>
-
-        <!-- Капучино -->
-        <div class="menu-item">
-            <div class="menu-item-name">Капучино</div>
-            <div class="menu-item-description">Эспрессо с молочной пеной</div>
-            <div class="menu-item-price">150 ₽</div>
-        </div>
+        {% endfor %}
     </div>
 </div>
 {% endblock %}

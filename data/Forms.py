@@ -17,3 +17,8 @@ class RegisterForm(FlaskForm):
     password = PasswordField('Пароль', validators=[DataRequired()])
     password_again = PasswordField('Повторите пароль', validators=[DataRequired()])
     submit = SubmitField('Зарегистрироваться')
+
+class AddDish(FlaskForm):
+    name = StringField('Имя пользователя', validators=[DataRequired()])
+    description = StringField('Описание', validators=[DataRequired()])
+    price = StringField('Цена', validators=[DataRequired()])

@@ -1,4 +1,4 @@
-import flask_login
+from flask_login import current_user
 from flask import Flask, render_template, url_for, request, make_response, redirect, jsonify
 from data import db_session
 from flask_login import LoginManager, login_user, login_required, logout_user
@@ -127,6 +127,8 @@ def login():
         user = db_sess.query(User).filter(User.email == form.email.data).first()
         if user and user.check_password(form.password.data):
             login_user(user, remember=form.remember_me.data)
+            if current_user.id == 1:
+                return redirect("/admin")
             return redirect("/")
         return render_template('login.html',
                                message="Неправильный логин или пароль",
@@ -163,9 +165,20 @@ def register():
 def menu():
     return render_template('menu.html')
 
+
 @app.route('/discountcard')
 def discountcard():
-        return render_template('discountcard.html')
+    return render_template('discountcard.html')
+
+
+@app.route('/admin')
+def admin():
+    print(current_user.id)
+    if current_user.id == 1:
+        return render_template('admin.html')
+    return redirect('/')
+
+
 def main():
     db_session.global_init("db/users.db")
     app.run()
