@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+
+{% block extra_css %}
+<style>
+    main {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: calc(100vh - 80px);
+        padding: 20px;
+    }
+
+    .map-container {
+        background: white;
+        border-radius: 15px;
+        padding: 40px;
+        width: 100%;
+        max-width: 900px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        border: 2px solid #ffc107;
+    }
+
+    .map-container h1 {
+        text-align: center;
+        color: #2c1810;
+        font-weight: 700;
+        margin-bottom: 30px;
+        font-size: 32px;
+    }
+
+    .map-image-wrapper {
+        display: flex;
+        justify-content: center;
+    }
+
+    .map-image {
+        width: 100%;
+        max-width: 600px;
+        border-radius: 12px;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .map-info {
+        background-color: #f8f9fa;
+        padding: 20px;
+        border-radius: 8px;
+        margin-top: 30px;
+        text-align: center;
+        color: #2c1810;
+    }
+
+    .map-info strong {
+        display: block;
+        font-size: 18px;
+        margin-bottom: 10px;
+    }
+
+    .map-info small {
+        display: block;
+        color: #666;
+    }
+
+    @media (max-width: 576px) {
+        .map-container {
+            padding: 25px 15px;
+        }
+
+        .map-container h1 {
+            font-size: 24px;
+            margin-bottom: 25px;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="map-container">
+    <div class="map-image-wrapper">
+        <img src="{{ url_for('static', filename='img/card.png') }}" alt="Карта расположения ресторана" class="map-image">
+    </div>
+
+    <div class="map-info">
+        <strong>Ресторан TIMMI</strong>
+    </div>
+</div>
+{% endblock %}

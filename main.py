@@ -21,9 +21,12 @@ def logout():
     logout_user()
     return redirect("/")
 
+
 @app.route('/contacts')
 def contacts():
     return render_template('contacts.html')
+
+
 @login_manager.user_loader
 def load_user(user_id):
     db_sess = db_session.create_session()
@@ -100,7 +103,7 @@ def location():
                 "apikey": API_KEY,
                 "ll": ",".join([str(toponym_longitude), str(toponym_lattitude)]),
                 "pt": ",".join([str(toponym_longitude), str(toponym_lattitude), str('pm2dbm')]) + '~' + ",".join(
-                [str(toponym_longitude1), str(toponym_lattitude1), str('pm2wtm')]),
+                    [str(toponym_longitude1), str(toponym_lattitude1), str('pm2wtm')]),
             }
 
             response = requests.get(api_server, params=params)
@@ -156,6 +159,13 @@ def register():
     return render_template('register.html', title='Регистрация', form=form)
 
 
+@app.route('/menu')
+def menu():
+    return render_template('menu.html')
+
+@app.route('/discountcard')
+def discountcard():
+        return render_template('discountcard.html')
 def main():
     db_session.global_init("db/users.db")
     app.run()

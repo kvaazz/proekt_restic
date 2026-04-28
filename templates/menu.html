@@ -1,0 +1,162 @@
+{% extends "base.html" %}
+
+{% block extra_css %}
+<style>
+    main {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: calc(100vh - 80px);
+        padding: 40px 20px;
+    }
+
+    .menu-container {
+        background: white;
+        border-radius: 15px;
+        padding: 40px;
+        width: 100%;
+        max-width: 900px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        border: 2px solid #ffc107;
+    }
+
+    .menu-container h1 {
+        text-align: center;
+        color: #2c1810;
+        font-weight: 700;
+        margin-bottom: 30px;
+        font-size: 32px;
+    }
+
+    .menu-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 20px;
+    }
+
+    .menu-item {
+        background-color: #f8f9fa;
+        border-radius: 12px;
+        padding: 20px;
+        box-shadow: 0 3px 15px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s;
+        border: 1px solid #eee;
+    }
+
+    .menu-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    }
+
+    .menu-item-name {
+        color: #2c1810;
+        font-weight: 700;
+        font-size: 18px;
+        margin-bottom: 10px;
+    }
+
+    .menu-item-description {
+        color: #666;
+        font-size: 14px;
+        margin-bottom: 15px;
+    }
+
+    .menu-item-price {
+        color: #ffc107;
+        font-weight: 700;
+        font-size: 20px;
+    }
+
+    .alert {
+        border-radius: 8px;
+        border: none;
+        margin-bottom: 20px;
+        padding: 12px 15px;
+    }
+
+    .alert-success {
+        background-color: #d4edda;
+        color: #155724;
+    }
+
+    @media (max-width: 576px) {
+        .menu-container {
+            padding: 25px 15px;
+        }
+
+        .menu-container h1 {
+            font-size: 24px;
+            margin-bottom: 25px;
+        }
+
+        .menu-grid {
+            grid-template-columns: 1fr;
+            gap: 15px;
+        }
+
+        .menu-item-name {
+            font-size: 16px;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="menu-container">
+    <h1>🍽️ Меню</h1>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    {% for category, message in messages %}
+    <div class="alert alert-{{ category }}">
+        {{ message }}
+    </div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+
+    <div class="menu-grid">
+        <!-- Паста -->
+        <div class="menu-item">
+            <div class="menu-item-name">Паста Болоньезе</div>
+            <div class="menu-item-description">Спагетти с мясным соусом и пармезаном</div>
+            <div class="menu-item-price">520 ₽</div>
+        </div>
+
+        <!-- Стейк -->
+        <div class="menu-item">
+            <div class="menu-item-name">Стейк Рибай</div>
+            <div class="menu-item-description">Мраморная говядина с овощами гриль</div>
+            <div class="menu-item-price">890 ₽</div>
+        </div>
+
+        <!-- Лосось -->
+        <div class="menu-item">
+            <div class="menu-item-name">Филе лосося</div>
+            <div class="menu-item-description">Лосось на гриле с лимоном и овощами</div>
+            <div class="menu-item-price">750 ₽</div>
+        </div>
+
+        <!-- Салат -->
+        <div class="menu-item">
+            <div class="menu-item-name">Салат Цезарь</div>
+            <div class="menu-item-description">Свежие овощи с курицей и пармезаном</div>
+            <div class="menu-item-price">350 ₽</div>
+        </div>
+
+        <!-- Тирамису -->
+        <div class="menu-item">
+            <div class="menu-item-name">Тирамису</div>
+            <div class="menu-item-description">Классический итальянский десерт</div>
+            <div class="menu-item-price">320 ₽</div>
+        </div>
+
+        <!-- Капучино -->
+        <div class="menu-item">
+            <div class="menu-item-name">Капучино</div>
+            <div class="menu-item-description">Эспрессо с молочной пеной</div>
+            <div class="menu-item-price">150 ₽</div>
+        </div>
+    </div>
+</div>
+{% endblock %}
