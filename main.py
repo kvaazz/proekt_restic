@@ -173,7 +173,6 @@ def discountcard():
 
 @app.route('/admin')
 def admin():
-    print(current_user.id)
     if current_user.id == 1:
         return render_template('admin.html')
     return redirect('/')
