@@ -7,7 +7,6 @@ from flask_restful import reqparse, abort, Api, Resource
 from data.users import User
 from data import users_resources
 import requests
-import json
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
@@ -22,7 +21,9 @@ def logout():
     logout_user()
     return redirect("/")
 
-
+@app.route('/contacts')
+def contacts():
+    return render_template('contacts.html')
 @login_manager.user_loader
 def load_user(user_id):
     db_sess = db_session.create_session()
