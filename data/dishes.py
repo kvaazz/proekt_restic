@@ -4,7 +4,7 @@ from sqlalchemy_serializer import SerializerMixin
 from .db_session import SqlAlchemyBase
 
 
-class User(SqlAlchemyBase, UserMixin, SerializerMixin):
+class Dish(SqlAlchemyBase, UserMixin, SerializerMixin):
     __tablename__ = 'dishes'
 
     id = sqlalchemy.Column(sqlalchemy.Integer,
@@ -13,6 +13,6 @@ class User(SqlAlchemyBase, UserMixin, SerializerMixin):
     description = sqlalchemy.Column(sqlalchemy.String, nullable=True)
     price = sqlalchemy.Column(sqlalchemy.Integer,
                               index=True, unique=True, nullable=True)
-
+    image = sqlalchemy.Column(sqlalchemy.String)
     def __repr__(self):
         return f"Блюдо {self.id} {self.name}"
