@@ -178,6 +178,27 @@ def admin():
     return redirect('/')
 
 
+@app.route('/admin/add_dish', methods=['GET', 'POST'])
+def admin_add():
+    if current_user.id == 1:
+        return render_template('add_dish.html')
+    return redirect('/')
+
+
+@app.route('/admin/edit_dish', methods=['GET', 'POST'])
+def admin_edit():
+    if current_user.id == 1:
+        return render_template('edit_dish.html')
+    return redirect('/')
+
+
+@app.route('/admin/delete_dish', methods=['GET', 'POST'])
+def admin_delete():
+    if current_user.id == 1:
+        return render_template('delete_dish.html')
+    return redirect('/')
+
+
 def main():
     db_session.global_init("db/users.db")
     app.run()

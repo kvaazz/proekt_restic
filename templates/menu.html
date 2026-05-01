@@ -2,30 +2,8 @@
 
 {% block extra_css %}
 <style>
-    main {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        min-height: calc(100vh - 80px);
-        padding: 40px 20px;
-    }
-
     .menu-container {
-        background: white;
-        border-radius: 15px;
-        padding: 40px;
-        width: 100%;
         max-width: 900px;
-        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
-        border: 2px solid #ffc107;
-    }
-
-    .menu-container h1 {
-        text-align: center;
-        color: #2c1810;
-        font-weight: 700;
-        margin-bottom: 30px;
-        font-size: 32px;
     }
 
     .menu-grid {
@@ -35,12 +13,12 @@
     }
 
     .menu-item {
-        background-color: #f8f9fa;
+        background-color: var(--gray);
         border-radius: 12px;
         overflow: hidden;
-        box-shadow: 0 3px 15px rgba(0, 0, 0, 0.1);
+        box-shadow: var(--shadow-sm);
         transition: all 0.3s;
-        border: 1px solid #eee;
+        border: 1px solid var(--border);
     }
 
     .menu-item:hover {
@@ -66,7 +44,7 @@
     }
 
     .menu-item-name {
-        color: #2c1810;
+        color: var(--text);
         font-weight: 700;
         font-size: 18px;
         margin-bottom: 10px;
@@ -79,33 +57,12 @@
     }
 
     .menu-item-price {
-        color: #ffc107;
+        color: var(--primary);
         font-weight: 700;
         font-size: 20px;
     }
 
-    .alert {
-        border-radius: 8px;
-        border: none;
-        margin-bottom: 20px;
-        padding: 12px 15px;
-    }
-
-    .alert-success {
-        background-color: #d4edda;
-        color: #155724;
-    }
-
     @media (max-width: 576px) {
-        .menu-container {
-            padding: 25px 15px;
-        }
-
-        .menu-container h1 {
-            font-size: 24px;
-            margin-bottom: 25px;
-        }
-
         .menu-grid {
             grid-template-columns: 1fr;
             gap: 15px;

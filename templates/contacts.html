@@ -2,29 +2,8 @@
 
 {% block extra_css %}
 <style>
-    main {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        min-height: calc(100vh - 80px);
-    }
-
     .contacts-container {
-        background: white;
-        border-radius: 15px;
-        padding: 40px;
-        width: 100%;
         max-width: 1200px;
-        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
-        border: 2px solid #ffc107;
-    }
-
-    .contacts-container h1 {
-        text-align: center;
-        color: #2c1810;
-        font-weight: 700;
-        margin-bottom: 40px;
-        font-size: 32px;
     }
 
     .contacts-content {
@@ -34,34 +13,17 @@
     }
 
     .contact-card {
-        background-color: #f8f9fa;
+        background-color: var(--gray);
         padding: 30px;
         border-radius: 8px;
-        border-left: 4px solid #ffc107;
+        border-left: 4px solid var(--primary);
     }
 
     .contact-card h3 {
-        color: #2c1810;
+        color: var(--text);
         font-weight: 600;
         margin-bottom: 20px;
         font-size: 20px;
-    }
-
-    .contact-item {
-        display: flex;
-        gap: 15px;
-        margin-bottom: 20px;
-        align-items: flex-start;
-    }
-
-    .contact-icon {
-        font-size: 28px;
-        min-width: 35px;
-        text-align: center;
-    }
-
-    .contact-info {
-        color: #2c1810;
     }
 
     .contact-info strong {
@@ -71,90 +33,14 @@
     }
 
     .contact-info a {
-        color: #ffc107;
+        color: var(--primary);
         text-decoration: none;
         font-weight: 600;
-        transition: color 0.3s;
     }
 
     .contact-info a:hover {
-        color: #e0a800;
+        color: var(--primary-dark);
         text-decoration: underline;
-    }
-
-    .contact-info small {
-        display: block;
-        color: #666;
-        margin-top: 5px;
-    }
-
-    .form-label {
-        color: #2c1810;
-        font-weight: 600;
-        margin-bottom: 10px;
-        display: block;
-    }
-
-    .form-control,
-    .form-control-textarea {
-        border: 1.5px solid #ddd;
-        border-radius: 8px;
-        padding: 12px 15px;
-        font-size: 16px;
-        width: 100%;
-        font-family: inherit;
-    }
-
-    .form-control:focus,
-    .form-control-textarea:focus {
-        border-color: #ffc107;
-        box-shadow: 0 0 0 0.2rem rgba(255, 193, 7, 0.25);
-        outline: none;
-    }
-
-    .form-control-textarea {
-        resize: vertical;
-        min-height: 120px;
-    }
-
-    .form-group {
-        margin-bottom: 20px;
-    }
-
-    .btn-submit {
-        background-color: #ffc107;
-        color: #2c1810;
-        border: none;
-        font-weight: 600;
-        padding: 12px 30px;
-        border-radius: 8px;
-        font-size: 16px;
-        width: 100%;
-        cursor: pointer;
-        transition: all 0.3s;
-    }
-
-    .btn-submit:hover {
-        background-color: #e0a800;
-        transform: translateY(-2px);
-        box-shadow: 0 5px 15px rgba(255, 193, 7, 0.3);
-    }
-
-    .alert {
-        border-radius: 8px;
-        border: none;
-        margin-bottom: 20px;
-        padding: 12px 15px;
-    }
-
-    .alert-danger {
-        background-color: #f8d7da;
-        color: #721c24;
-    }
-
-    .alert-success {
-        background-color: #d4edda;
-        color: #155724;
     }
 
     .social-links {
@@ -169,53 +55,28 @@
         justify-content: center;
         width: 50px;
         height: 50px;
-        background-color: #ffc107;
+        background-color: var(--primary);
         border-radius: 8px;
         text-decoration: none;
-        color: #2c1810;
+        color: var(--text);
         font-size: 24px;
         transition: all 0.3s;
     }
 
     .social-link:hover {
-        background-color: #e0a800;
+        background-color: var(--primary-dark);
         transform: translateY(-3px);
         box-shadow: 0 5px 15px rgba(255, 193, 7, 0.3);
     }
 
     @media (max-width: 768px) {
-        .contacts-container {
-            padding: 30px 20px;
-        }
-
         .contacts-content {
             grid-template-columns: 1fr;
             gap: 30px;
         }
-
-        .contacts-container h1 {
-            font-size: 28px;
-            margin-bottom: 30px;
-        }
     }
 
     @media (max-width: 576px) {
-        .contacts-container {
-            padding: 25px 15px;
-        }
-
-        .contacts-container h1 {
-            font-size: 24px;
-            margin-bottom: 25px;
-        }
-
-        .form-control,
-        .form-control-textarea,
-        .btn-submit {
-            font-size: 15px;
-            padding: 11px 12px;
-        }
-
         .contact-item {
             gap: 10px;
         }
@@ -229,7 +90,7 @@
 
 {% block content %}
 <div class="contacts-container">
-    <h1>Контакты</h1>
+    <h1>📞 Контакты</h1>
 
     {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
@@ -248,28 +109,32 @@
                 <h3>🍽️ Ресторан TIMMI</h3>
 
                 <div class="contact-item">
+                    <span class="contact-icon">📍</span>
                     <div class="contact-info">
                         <strong>Адрес</strong>
                         Великий Новгород<br>
-                        Великолукская улица, 18
+                        <small>Великолукская улица, 18</small>
                     </div>
                 </div>
 
                 <div class="contact-item">
+                    <span class="contact-icon">📞</span>
                     <div class="contact-info">
                         <strong>Телефон</strong>
-                        +7 (999) 123-45-67<br>
+                        <a href="tel:+79991234567">+7 (999) 123-45-67</a>
                     </div>
                 </div>
 
                 <div class="contact-item">
+                    <span class="contact-icon">✉️</span>
                     <div class="contact-info">
                         <strong>Email</strong>
-                        info@timmi.ru<br>
+                        <a href="mailto:info@timmi.ru">info@timmi.ru</a>
                     </div>
                 </div>
 
                 <div class="contact-item">
+                    <span class="contact-icon">🕐</span>
                     <div class="contact-info">
                         <strong>Время работы</strong>
                         Пн-Чт: 11:00 - 23:00<br>
