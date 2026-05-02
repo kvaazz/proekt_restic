@@ -1,12 +1,17 @@
 from flask_login import current_user
-from flask import Flask, render_template, url_for, request, make_response, redirect, jsonify
+from flask import Flask, render_template, url_for, request, redirect
 from data import db_session
 from flask_login import LoginManager, login_user, login_required, logout_user
 from data.Forms import LoginForm, RegisterForm
-from flask_restful import reqparse, abort, Api, Resource
 from data.users import User
+from data.dishes import Dish
 from data import users_resources
 import requests
+from werkzeug.utils import secure_filename
+import time
+from pathlib import Path
+import barcode
+from barcode.writer import ImageWriter
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
@@ -149,11 +154,19 @@ def register():
             return render_template('register.html', title='Регистрация',
                                    form=form,
                                    message="Такой пользователь уже есть")
+
         user = User()
         user.name = form.name.data
         user.phone_number = form.phone_number.data
         user.email = form.email.data
         user.set_password(form.password.data)
+
+        EAN = barcode.get_barcode_class('code128')
+        my_barcode = EAN(user.email, writer=ImageWriter())
+        file_path = Path('static') / 'img' / 'cards' / user.email
+        my_barcode.save(file_path)
+        user.card = user.email
+
         print(user)
         db_sess.add(user)
         db_sess.commit()
@@ -163,12 +176,39 @@ def register():
 
 @app.route('/menu')
 def menu():
-    return render_template('menu.html')
+    CATEGORIES = {
+        'all': 'Все',
+        'salads': 'Салаты',
+        'soups': 'Супы',
+        'mains': 'Горячее',
+        'desserts': 'Десерты',
+        'drinks': 'Напитки'
+    }
+    current_category = request.args.get('category', 'all')
+
+    db_sess = db_session.create_session()
+
+    # Фильтруем блюда
+    if current_category == 'all':
+        dishes = db_sess.query(Dish).all()
+    else:
+        dishes = db_sess.query(Dish).filter(Dish.category == current_category).all()
+
+    menu_data = {
+        'title': 'Меню',
+        'dishes': dishes,
+        'categories': CATEGORIES,
+        'current_category': current_category
+    }
+
+    return render_template('menu.html', menu=menu_data)
 
 
 @app.route('/discountcard')
 def discountcard():
-    return render_template('discountcard.html')
+    card_image = f"img/cards/{current_user.card}.png"
+    return render_template('discountcard.html',
+                           card_image=card_image)
 
 
 @app.route('/admin')
@@ -181,6 +221,40 @@ def admin():
 @app.route('/admin/add_dish', methods=['GET', 'POST'])
 def admin_add():
     if current_user.id == 1:
+        if request.method == 'POST':
+            name = request.form.get('name')
+            description = request.form.get('description')
+            price = request.form.get('price')
+            category = request.form.get('category')
+
+            # Валидация
+            if not all([name, description, price]):
+                return redirect(url_for('admin_add'))
+
+            image_filename = 'default.jpg'
+            if 'image' in request.files:
+                file = request.files['image']
+
+                if file and file.filename:
+                    filename = secure_filename(file.filename)
+                    filename = f"{int(time.time())}_{filename}"
+                    file_path = Path('static') / 'img' / filename
+                    file.save(str(file_path))
+                    saved_filename = filename
+
+                    if saved_filename:
+                        image_filename = saved_filename
+
+            db_sess = db_session.create_session()
+            dish = Dish()
+            dish.name = name.strip()
+            dish.description = description.strip()
+            dish.price = price
+            dish.image = image_filename
+            dish.category = category
+            db_sess.add(dish)
+            db_sess.commit()
+            return redirect(url_for('admin'))
         return render_template('add_dish.html')
     return redirect('/')
 

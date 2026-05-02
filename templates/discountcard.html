@@ -2,85 +2,134 @@
 
 {% block extra_css %}
 <style>
-    main {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        min-height: calc(100vh - 80px);
-        padding: 20px;
-    }
-
-    .map-container {
-        background: white;
-        border-radius: 15px;
-        padding: 40px;
-        width: 100%;
-        max-width: 900px;
-        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
-        border: 2px solid #ffc107;
-    }
-
-    .map-container h1 {
-        text-align: center;
-        color: #2c1810;
-        font-weight: 700;
-        margin-bottom: 30px;
-        font-size: 32px;
-    }
-
-    .map-image-wrapper {
-        display: flex;
-        justify-content: center;
-    }
-
-    .map-image {
-        width: 100%;
+    .discount-card-container {
         max-width: 600px;
-        border-radius: 12px;
-        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
     }
 
-    .map-info {
-        background-color: #f8f9fa;
-        padding: 20px;
-        border-radius: 8px;
-        margin-top: 30px;
+    .card-image-wrapper {
         text-align: center;
-        color: #2c1810;
+        margin-bottom: 20px;
     }
 
-    .map-info strong {
-        display: block;
-        font-size: 18px;
-        margin-bottom: 10px;
+    .card-image-wrapper img {
+        width: 100%;
+        max-width: 500px;
+        height: auto;
+        border-radius: 8px;
+        box-shadow: var(--shadow-sm);
     }
 
-    .map-info small {
-        display: block;
+    .card-info {
+        background-color: var(--gray);
+        padding: 20px;
+        border-radius: 12px;
+        border-left: 4px solid var(--primary);
+        margin-bottom: 20px;
+    }
+
+    .card-info h3 {
+        color: var(--text);
+        font-weight: 600;
+        margin-bottom: 15px;
+    }
+
+    .card-info p {
         color: #666;
+        margin-bottom: 8px;
+        font-size: 14px;
+    }
+
+    .error-message {
+        background-color: #f8d7da;
+        color: #721c24;
+        padding: 15px;
+        border-radius: 8px;
+        border-left: 4px solid #dc3545;
+        margin-bottom: 20px;
+    }
+
+    .button-group {
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+        margin-top: 20px;
+    }
+
+    .btn-download,
+    .btn-print,
+    .btn-back {
+        flex: 1;
+        padding: 12px 24px;
+        border: none;
+        border-radius: 8px;
+        font-weight: 600;
+        font-size: 16px;
+        cursor: pointer;
+        transition: all 0.3s;
+        text-decoration: none;
+        display: inline-block;
+        text-align: center;
+    }
+
+    .btn-download {
+        background-color: var(--success);
+        color: white;
+    }
+
+    .btn-download:hover {
+        background-color: var(--success-dark);
+        transform: translateY(-2px);
+    }
+
+    .btn-print {
+        background-color: var(--info);
+        color: white;
+    }
+
+    .btn-print:hover {
+        background-color: var(--info-dark);
+        transform: translateY(-2px);
+    }
+
+    .btn-back {
+        background-color: #6c757d;
+        color: white;
+    }
+
+    .btn-back:hover {
+        background-color: #5a6268;
     }
 
     @media (max-width: 576px) {
-        .map-container {
-            padding: 25px 15px;
+        .button-group {
+            flex-direction: column;
         }
 
-        .map-container h1 {
-            font-size: 24px;
-            margin-bottom: 25px;
+        .btn-download,
+        .btn-print,
+        .btn-back {
+            flex: none;
+            width: 100%;
+        }
+    }
+
+    @media print {
+        .button-group,
+        .card-info {
+            display: none;
         }
     }
 </style>
 {% endblock %}
 
 {% block content %}
-<div class="map-container">
-    <div class="map-image-wrapper">
-        <img src="{{ url_for('static', filename='img/card.png') }}" alt="Карта расположения ресторана" class="map-image">
-    </div>
+<div class="discount-card-container">
+        <div class="card-image-wrapper">
+            <img src="{{ url_for('static', filename=card_image) }}" alt="Скидочная карта">
+        </div>
 
-    <div class="map-info">
-        <strong>Ресторан TIMMI</strong>
-    </div>
+        <div class="button-group">
+            <a href="{{ url_for('static', filename=card_image) }}" download class="btn-download">📥 Скачать карту</a>
+        </div>
 </div>
 {% endblock %}

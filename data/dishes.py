@@ -14,5 +14,7 @@ class Dish(SqlAlchemyBase, UserMixin, SerializerMixin):
     price = sqlalchemy.Column(sqlalchemy.Integer,
                               index=True, unique=True, nullable=True)
     image = sqlalchemy.Column(sqlalchemy.String)
+    category = sqlalchemy.Column(sqlalchemy.String)
+
     def __repr__(self):
         return f"Блюдо {self.id} {self.name}"
