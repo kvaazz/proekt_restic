@@ -214,7 +214,34 @@ def discountcard():
 @app.route('/admin')
 def admin():
     if current_user.id == 1:
-        return render_template('admin.html')
+        CATEGORIES = {
+            'all': 'Все',
+            'salads': 'Салаты',
+            'soups': 'Супы',
+            'mains': 'Горячее',
+            'desserts': 'Десерты',
+            'drinks': 'Напитки'
+        }
+        current_category = request.args.get('category', 'all')
+
+        db_sess = db_session.create_session()
+
+        # Фильтруем блюда
+        if current_category == 'all':
+            dishes = db_sess.query(Dish).all()
+        else:
+            dishes = db_sess.query(Dish).filter(Dish.category == current_category).all()
+
+        menu_data = {
+            'title': 'Меню',
+            'dishes': dishes,
+            'categories': CATEGORIES,
+            'current_category': current_category
+        }
+
+        return render_template('admin.html', menu=menu_data)
+
+
     return redirect('/')
 
 
@@ -259,17 +286,83 @@ def admin_add():
     return redirect('/')
 
 
-@app.route('/admin/edit_dish', methods=['GET', 'POST'])
-def admin_edit():
+@app.route('/admin/edit_dish/<int:dish_id>', methods=['GET', 'POST'])
+def admin_edit(dish_id):
     if current_user.id == 1:
-        return render_template('edit_dish.html')
-    return redirect('/')
+        db_sess = db_session.create_session()
+        dish = db_sess.query(Dish).get(dish_id)
 
+        if not dish:
+            return redirect(url_for('admin'))
+
+        if request.method == 'POST':
+            name = request.form.get('name')
+            description = request.form.get('description')
+            price = request.form.get('price')
+            category = request.form.get('category')
+
+            price = int(price)
+
+            dish.name = name.strip()
+            dish.description = description.strip()
+            dish.price = price
+            dish.category = category
+
+            if 'image' in request.files:
+                file = request.files['image']
+                if file and file.filename:
+                    from werkzeug.utils import secure_filename
+                    from pathlib import Path
+                    import time
+
+                    filename = secure_filename(file.filename)
+                    filename = f"{int(time.time())}_{filename}"
+                    file_path = Path('static') / 'img' / filename
+
+                    if dish.image and dish.image != 'default.jpg':
+                        old_path = Path('static') / 'img' / dish.image
+                        if old_path.exists():
+                            old_path.unlink()
+
+                    file.save(str(file_path))
+                    dish.image = filename
+
+            db_sess.commit()
+            return redirect(url_for('admin'))
+
+        return render_template('edit_dish.html', title='Изменить блюдо', dish=dish)
+
+    return redirect('/')
 
 @app.route('/admin/delete_dish', methods=['GET', 'POST'])
 def admin_delete():
     if current_user.id == 1:
-        return render_template('delete_dish.html')
+        dish_id = request.form.get('dish_id')
+
+        if not dish_id:
+            return redirect(url_for('admin'))
+
+        try:
+            db_sess = db_session.create_session()
+            dish = db_sess.query(Dish).get(dish_id)
+
+            if not dish:
+                return redirect(url_for('admin'))
+
+            if dish.image and dish.image != 'default.jpg':
+                from pathlib import Path
+                image_path = Path('static') / 'img' / dish.image
+                if image_path.exists():
+                    image_path.unlink()
+
+            db_sess.delete(dish)
+            db_sess.commit()
+
+        except Exception as e:
+            print(f"Ошибка при удалении: {e}")
+
+        return redirect(url_for('admin'))
+
     return redirect('/')
 
 

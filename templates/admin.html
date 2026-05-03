@@ -3,59 +3,194 @@
 {% block extra_css %}
 <style>
     .admin-container {
-        max-width: 800px;
+        max-width: 1000px;
     }
 
-    .button-group {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-        gap: 15px;
-        margin-bottom: 30px;
-    }
-
-    .btn {
-        padding: 12px 24px;
-        font-size: 16px;
-        font-weight: 600;
-        border: none;
-        border-radius: 8px;
-        cursor: pointer;
-        transition: all 0.3s;
-        text-decoration: none;
-        display: inline-block;
+    .add-button-container {
         text-align: center;
+        margin-bottom: 40px;
     }
 
-    .btn-add {
+    .btn-add-large {
         background-color: var(--success);
         color: white;
+        padding: 15px 40px;
+        font-size: 18px;
+        font-weight: 700;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        text-decoration: none;
+        display: inline-block;
+        transition: all 0.3s;
     }
 
-    .btn-add:hover {
+    .btn-add-large:hover {
         background-color: var(--success-dark);
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(40, 167, 69, 0.3);
+    }
+
+    .category-filters {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 30px;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .filter-btn {
+        background-color: var(--gray-light);
+        color: var(--text);
+        border: 2px solid var(--border);
+        padding: 8px 20px;
+        border-radius: 25px;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.3s;
+        font-size: 15px;
+    }
+
+    .filter-btn:hover {
+        border-color: var(--primary);
+    }
+
+    .filter-btn.active {
+        background-color: var(--primary);
+        border-color: var(--primary);
+        color: black;
+    }
+
+    .menu-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 25px;
+    }
+
+    .menu-item {
+        background-color: var(--gray);
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: var(--shadow-sm);
+        transition: all 0.3s;
+        border: 1px solid var(--border);
+        display: flex;
+        flex-direction: column;
+    }
+
+    .menu-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    }
+
+    .menu-item-image {
+        width: 100%;
+        height: 200px;
+        background-color: #e0e0e0;
+        overflow: hidden;
+    }
+
+    .menu-item-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .menu-item-content {
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+    }
+
+    .menu-item-name {
+        color: var(--text);
+        font-weight: 700;
+        font-size: 18px;
+        margin-bottom: 10px;
+    }
+
+    .menu-item-description {
+        color: #666;
+        font-size: 14px;
+        margin-bottom: 15px;
+        flex-grow: 1;
+    }
+
+    .menu-item-price {
+        color: var(--primary);
+        font-weight: 700;
+        font-size: 22px;
+        margin-bottom: 15px;
+    }
+
+    .dish-actions {
+        display: flex;
+        gap: 10px;
+    }
+
+    .dish-actions a,
+    .dish-actions form {
+        flex: 1;
     }
 
     .btn-edit {
         background-color: var(--info);
         color: white;
+        padding: 10px 16px;
+        border: none;
+        border-radius: 6px;
+        text-decoration: none;
+        display: block;
+        text-align: center;
+        font-weight: 600;
+        font-size: 14px;
+        transition: all 0.3s;
     }
 
     .btn-edit:hover {
         background-color: var(--info-dark);
     }
 
-    .btn-delete {
+    .btn-delete-small {
         background-color: var(--danger);
         color: white;
+        padding: 10px 16px;
+        border: none;
+        border-radius: 6px;
+        font-weight: 600;
+        font-size: 14px;
+        width: 100%;
+        cursor: pointer;
+        transition: all 0.3s;
     }
 
-    .btn-delete:hover {
+    .btn-delete-small:hover {
         background-color: var(--danger-dark);
     }
 
+    .empty-message {
+        text-align: center;
+        padding: 50px 20px;
+        color: #666;
+        font-size: 18px;
+        background-color: var(--gray-light);
+        border-radius: 12px;
+    }
+
     @media (max-width: 576px) {
-        .button-group {
+        .category-filters {
+            gap: 8px;
+        }
+
+        .filter-btn {
+            padding: 6px 15px;
+            font-size: 14px;
+        }
+
+        .menu-grid {
             grid-template-columns: 1fr;
+            gap: 15px;
         }
     }
 </style>
@@ -75,10 +210,56 @@
     {% endif %}
     {% endwith %}
 
-    <div class="button-group">
-        <a href="{{ url_for('admin_add') }}" class="btn btn-add">+ Добавить</a>
-        <a href="{{ url_for('admin_edit') }}" class="btn btn-edit">Изменить</a>
-        <a href="{{ url_for('admin_delete') }}" class="btn btn-delete">- Удалить</a>
+    <!-- Кнопка добавить блюдо -->
+    <div class="add-button-container">
+        <a href="{{ url_for('admin_add') }}" class="btn-add-large">+ Добавить блюдо</a>
     </div>
+
+    <!-- Кнопки категорий -->
+    <div class="category-filters">
+        {% for cat_id, cat_name in menu.categories.items() %}
+        <a href="{{ url_for('admin', category=cat_id) }}"
+           class="filter-btn {% if menu.current_category == cat_id %}active{% endif %}">
+            {{ cat_name }}
+        </a>
+        {% endfor %}
+    </div>
+
+    <!-- Сетка блюд -->
+    {% if menu.dishes %}
+    <div class="menu-grid">
+        {% for dish in menu.dishes %}
+        <div class="menu-item">
+            <div class="menu-item-image">
+                {% if dish.image and dish.image != 'default.jpg' %}
+                <img src="{{ url_for('static', filename='img/' + dish.image) }}" alt="{{ dish.name }}">
+                {% else %}
+                <img src="{{ url_for('static', filename='img/default.jpg') }}" alt="{{ dish.name }}">
+                {% endif %}
+            </div>
+            <div class="menu-item-content">
+                <div class="menu-item-name">{{ dish.name }}</div>
+                <div class="menu-item-description">{{ dish.description }}</div>
+                <div class="menu-item-price">{{ dish.price }} ₽</div>
+
+                <!-- Кнопки управления -->
+                <div class="dish-actions">
+                    <a href="{{ url_for('admin_edit', dish_id=dish.id) }}" class="btn-edit">Изменить</a>
+                    <form method="POST" action="{{ url_for('admin_delete') }}" style="margin: 0;">
+                        <input type="hidden" name="dish_id" value="{{ dish.id }}">
+                        <button type="submit" class="btn-delete-small"
+                                onclick="return confirm('Удалить блюдо {{ dish.name }}?');">Удалить
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="empty-message">
+        В этой категории пока нет блюд
+    </div>
+    {% endif %}
 </div>
 {% endblock %}
