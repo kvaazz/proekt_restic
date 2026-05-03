@@ -342,26 +342,23 @@ def admin_delete():
         if not dish_id:
             return redirect(url_for('admin'))
 
-        try:
-            db_sess = db_session.create_session()
-            dish = db_sess.query(Dish).get(dish_id)
 
-            if not dish:
-                return redirect(url_for('admin'))
+        db_sess = db_session.create_session()
+        dish = db_sess.query(Dish).get(dish_id)
 
-            if dish.image and dish.image != 'default.jpg':
-                from pathlib import Path
-                image_path = Path('static') / 'img' / dish.image
-                if image_path.exists():
-                    image_path.unlink()
+        if not dish:
+            return redirect(url_for('admin'))
 
-            db_sess.delete(dish)
-            db_sess.commit()
+        if dish.image and dish.image != 'default.jpg':
+            from pathlib import Path
+            image_path = Path('static') / 'img' / dish.image
+            if image_path.exists():
+                image_path.unlink()
 
-        except Exception as e:
-            print(f"Ошибка при удалении: {e}")
+        db_sess.delete(dish)
+        db_sess.commit()
 
-        return redirect(url_for('admin'))
+    return redirect(url_for('admin'))
 
     return redirect('/')
 
