@@ -2,134 +2,71 @@
 
 {% block extra_css %}
 <style>
+.discount-card-container {
+    max-width: 600px;
+    margin: 0 auto;
+    background: #fff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+}
+
+.card-image-wrapper {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.card-image-wrapper img {
+    width: 100%;
+    max-width: 480px;
+    height: auto;
+    border-radius: 8px;
+}
+
+.button-group {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.btn-download {
+    padding: 12px 24px;
+    border-radius: 6px;
+    font-size: 15px;
+    font-weight: 500;
+    text-decoration: none;
+    background: #28a745;
+    color: #fff;
+    transition: background 0.2s ease;
+}
+
+.btn-download:hover {
+    background: #218838;
+}
+
+@media (max-width: 576px) {
     .discount-card-container {
-        max-width: 600px;
-    }
-
-    .card-image-wrapper {
-        text-align: center;
-        margin-bottom: 20px;
-    }
-
-    .card-image-wrapper img {
-        width: 100%;
-        max-width: 500px;
-        height: auto;
-        border-radius: 8px;
-        box-shadow: var(--shadow-sm);
-    }
-
-    .card-info {
-        background-color: var(--gray);
-        padding: 20px;
-        border-radius: 12px;
-        border-left: 4px solid var(--primary);
-        margin-bottom: 20px;
-    }
-
-    .card-info h3 {
-        color: var(--text);
-        font-weight: 600;
-        margin-bottom: 15px;
-    }
-
-    .card-info p {
-        color: #666;
-        margin-bottom: 8px;
-        font-size: 14px;
-    }
-
-    .error-message {
-        background-color: #f8d7da;
-        color: #721c24;
-        padding: 15px;
-        border-radius: 8px;
-        border-left: 4px solid #dc3545;
-        margin-bottom: 20px;
-    }
-
-    .button-group {
-        display: flex;
-        gap: 10px;
-        justify-content: center;
-        margin-top: 20px;
-    }
-
-    .btn-download,
-    .btn-print,
-    .btn-back {
-        flex: 1;
-        padding: 12px 24px;
-        border: none;
-        border-radius: 8px;
-        font-weight: 600;
-        font-size: 16px;
-        cursor: pointer;
-        transition: all 0.3s;
-        text-decoration: none;
-        display: inline-block;
-        text-align: center;
+        padding: 20px 15px;
     }
 
     .btn-download {
-        background-color: var(--success);
-        color: white;
+        width: 100%;
+        text-align: center;
     }
-
-    .btn-download:hover {
-        background-color: var(--success-dark);
-        transform: translateY(-2px);
-    }
-
-    .btn-print {
-        background-color: var(--info);
-        color: white;
-    }
-
-    .btn-print:hover {
-        background-color: var(--info-dark);
-        transform: translateY(-2px);
-    }
-
-    .btn-back {
-        background-color: #6c757d;
-        color: white;
-    }
-
-    .btn-back:hover {
-        background-color: #5a6268;
-    }
-
-    @media (max-width: 576px) {
-        .button-group {
-            flex-direction: column;
-        }
-
-        .btn-download,
-        .btn-print,
-        .btn-back {
-            flex: none;
-            width: 100%;
-        }
-    }
-
-    @media print {
-        .button-group,
-        .card-info {
-            display: none;
-        }
-    }
+}
 </style>
 {% endblock %}
 
 {% block content %}
 <div class="discount-card-container">
-        <div class="card-image-wrapper">
-            <img src="{{ url_for('static', filename=card_image) }}" alt="Скидочная карта">
-        </div>
+    <div class="card-image-wrapper">
+        <img src="{{ url_for('static', filename=card_image) }}" alt="Скидочная карта">
+    </div>
 
-        <div class="button-group">
-            <a href="{{ url_for('static', filename=card_image) }}" download class="btn-download">📥 Скачать карту</a>
-        </div>
+    <div class="button-group">
+        <a href="{{ url_for('static', filename=card_image) }}" download class="btn-download">
+            Скачать карту
+        </a>
+    </div>
 </div>
 {% endblock %}

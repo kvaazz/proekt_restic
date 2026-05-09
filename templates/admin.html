@@ -2,197 +2,180 @@
 
 {% block extra_css %}
 <style>
-    .admin-container {
-        max-width: 1000px;
-    }
+.admin-container {
+    max-width: 1100px;
+    margin: 0 auto;
+}
 
-    .add-button-container {
-        text-align: center;
-        margin-bottom: 40px;
-    }
+.add-button-container {
+    text-align: center;
+    margin: 30px 0 40px;
+}
 
-    .btn-add-large {
-        background-color: var(--success);
-        color: white;
-        padding: 15px 40px;
-        font-size: 18px;
-        font-weight: 700;
-        border: none;
-        border-radius: 10px;
-        cursor: pointer;
-        text-decoration: none;
-        display: inline-block;
-        transition: all 0.3s;
-    }
+.btn-add-large {
+    display: inline-block;
+    padding: 14px 32px;
+    font-size: 17px;
+    font-weight: 600;
+    border-radius: 8px;
+    background: #28a745;
+    color: #fff;
+    text-decoration: none;
+    transition: background 0.2s ease, transform 0.2s ease;
+}
 
-    .btn-add-large:hover {
-        background-color: var(--success-dark);
-        transform: translateY(-2px);
-        box-shadow: 0 5px 15px rgba(40, 167, 69, 0.3);
-    }
+.btn-add-large:hover {
+    background: #218838;
+    transform: translateY(-2px);
+}
 
-    .category-filters {
-        display: flex;
-        gap: 10px;
-        margin-bottom: 30px;
-        justify-content: center;
-        flex-wrap: wrap;
-    }
+.category-filters {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 30px;
+}
 
-    .filter-btn {
-        background-color: var(--gray-light);
-        color: var(--text);
-        border: 2px solid var(--border);
-        padding: 8px 20px;
-        border-radius: 25px;
-        font-weight: 600;
-        text-decoration: none;
-        transition: all 0.3s;
-        font-size: 15px;
-    }
+.filter-btn {
+    padding: 8px 18px;
+    border-radius: 20px;
+    border: 1px solid #ccc;
+    background: #f5f5f5;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    color: #333;
+    transition: all 0.2s ease;
+}
 
-    .filter-btn:hover {
-        border-color: var(--primary);
-    }
+.filter-btn:hover {
+    border-color: #999;
+}
 
-    .filter-btn.active {
-        background-color: var(--primary);
-        border-color: var(--primary);
-        color: black;
-    }
+.filter-btn.active {
+    background: #007bff;
+    border-color: #007bff;
+    color: #000;
+}
 
+.menu-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 20px;
+}
+
+.menu-item {
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    border: 1px solid #e5e5e5;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.menu-item:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+}
+
+.menu-item-image {
+    height: 180px;
+    background: #f0f0f0;
+    overflow: hidden;
+}
+
+.menu-item-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.menu-item-content {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.menu-item-name {
+    font-size: 17px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.menu-item-description {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 12px;
+    flex: 1;
+}
+
+.menu-item-price {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 14px;
+    color: #000;
+}
+
+.dish-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.dish-actions a,
+.dish-actions form {
+    flex: 1;
+}
+
+.btn-edit {
+    display: block;
+    padding: 9px 12px;
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 6px;
+    text-align: center;
+    text-decoration: none;
+    background: #17a2b8;
+    color: #fff;
+    transition: background 0.2s ease;
+}
+
+.btn-edit:hover {
+    background: #138496;
+}
+
+.btn-delete-small {
+    width: 100%;
+    padding: 9px 12px;
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    background: #dc3545;
+    color: #fff;
+    transition: background 0.2s ease;
+}
+
+.btn-delete-small:hover {
+    background: #c82333;
+}
+
+.empty-message {
+    text-align: center;
+    padding: 40px 20px;
+    background: #f8f9fa;
+    border-radius: 10px;
+    color: #666;
+}
+
+@media (max-width: 576px) {
     .menu-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-        gap: 25px;
+        grid-template-columns: 1fr;
     }
-
-    .menu-item {
-        background-color: var(--gray);
-        border-radius: 15px;
-        overflow: hidden;
-        box-shadow: var(--shadow-sm);
-        transition: all 0.3s;
-        border: 1px solid var(--border);
-        display: flex;
-        flex-direction: column;
-    }
-
-    .menu-item:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-    }
-
-    .menu-item-image {
-        width: 100%;
-        height: 200px;
-        background-color: #e0e0e0;
-        overflow: hidden;
-    }
-
-    .menu-item-image img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    }
-
-    .menu-item-content {
-        padding: 20px;
-        display: flex;
-        flex-direction: column;
-        flex-grow: 1;
-    }
-
-    .menu-item-name {
-        color: var(--text);
-        font-weight: 700;
-        font-size: 18px;
-        margin-bottom: 10px;
-    }
-
-    .menu-item-description {
-        color: #666;
-        font-size: 14px;
-        margin-bottom: 15px;
-        flex-grow: 1;
-    }
-
-    .menu-item-price {
-        color: var(--primary);
-        font-weight: 700;
-        font-size: 22px;
-        margin-bottom: 15px;
-    }
-
-    .dish-actions {
-        display: flex;
-        gap: 10px;
-    }
-
-    .dish-actions a,
-    .dish-actions form {
-        flex: 1;
-    }
-
-    .btn-edit {
-        background-color: var(--info);
-        color: white;
-        padding: 10px 16px;
-        border: none;
-        border-radius: 6px;
-        text-decoration: none;
-        display: block;
-        text-align: center;
-        font-weight: 600;
-        font-size: 14px;
-        transition: all 0.3s;
-    }
-
-    .btn-edit:hover {
-        background-color: var(--info-dark);
-    }
-
-    .btn-delete-small {
-        background-color: var(--danger);
-        color: white;
-        padding: 10px 16px;
-        border: none;
-        border-radius: 6px;
-        font-weight: 600;
-        font-size: 14px;
-        width: 100%;
-        cursor: pointer;
-        transition: all 0.3s;
-    }
-
-    .btn-delete-small:hover {
-        background-color: var(--danger-dark);
-    }
-
-    .empty-message {
-        text-align: center;
-        padding: 50px 20px;
-        color: #666;
-        font-size: 18px;
-        background-color: var(--gray-light);
-        border-radius: 12px;
-    }
-
-    @media (max-width: 576px) {
-        .category-filters {
-            gap: 8px;
-        }
-
-        .filter-btn {
-            padding: 6px 15px;
-            font-size: 14px;
-        }
-
-        .menu-grid {
-            grid-template-columns: 1fr;
-            gap: 15px;
-        }
-    }
+}
 </style>
 {% endblock %}
 
@@ -201,65 +184,66 @@
     <h1>Панель администратора</h1>
 
     {% with messages = get_flashed_messages(with_categories=true) %}
-    {% if messages %}
-    {% for category, message in messages %}
-    <div class="alert alert-{{ category }}">
-        {{ message }}
-    </div>
-    {% endfor %}
-    {% endif %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
     {% endwith %}
 
-    <!-- Кнопка добавить блюдо -->
     <div class="add-button-container">
-        <a href="{{ url_for('admin_add') }}" class="btn-add-large">+ Добавить блюдо</a>
+        <a href="{{ url_for('admin_add') }}" class="btn-add-large">Добавить блюдо</a>
     </div>
 
-    <!-- Кнопки категорий -->
     <div class="category-filters">
         {% for cat_id, cat_name in menu.categories.items() %}
-        <a href="{{ url_for('admin', category=cat_id) }}"
-           class="filter-btn {% if menu.current_category == cat_id %}active{% endif %}">
-            {{ cat_name }}
-        </a>
+            <a href="{{ url_for('admin', category=cat_id) }}"
+               class="filter-btn {% if menu.current_category == cat_id %}active{% endif %}">
+                {{ cat_name }}
+            </a>
         {% endfor %}
     </div>
 
-    <!-- Сетка блюд -->
     {% if menu.dishes %}
-    <div class="menu-grid">
-        {% for dish in menu.dishes %}
-        <div class="menu-item">
-            <div class="menu-item-image">
-                {% if dish.image and dish.image != 'default.jpg' %}
-                <img src="{{ url_for('static', filename='img/' + dish.image) }}" alt="{{ dish.name }}">
-                {% else %}
-                <img src="{{ url_for('static', filename='img/default.jpg') }}" alt="{{ dish.name }}">
-                {% endif %}
-            </div>
-            <div class="menu-item-content">
-                <div class="menu-item-name">{{ dish.name }}</div>
-                <div class="menu-item-description">{{ dish.description }}</div>
-                <div class="menu-item-price">{{ dish.price }} ₽</div>
+        <div class="menu-grid">
+            {% for dish in menu.dishes %}
+                <div class="menu-item">
+                    <div class="menu-item-image">
+                        {% if dish.image and dish.image != 'default.jpg' %}
+                            <img src="{{ url_for('static', filename='img/' + dish.image) }}" alt="{{ dish.name }}">
+                        {% else %}
+                            <img src="{{ url_for('static', filename='img/default.jpg') }}" alt="{{ dish.name }}">
+                        {% endif %}
+                    </div>
 
-                <!-- Кнопки управления -->
-                <div class="dish-actions">
-                    <a href="{{ url_for('admin_edit', dish_id=dish.id) }}" class="btn-edit">Изменить</a>
-                    <form method="POST" action="{{ url_for('admin_delete') }}" style="margin: 0;">
-                        <input type="hidden" name="dish_id" value="{{ dish.id }}">
-                        <button type="submit" class="btn-delete-small"
-                                onclick="return confirm('Удалить блюдо {{ dish.name }}?');">Удалить
-                        </button>
-                    </form>
+                    <div class="menu-item-content">
+                        <div class="menu-item-name">{{ dish.name }}</div>
+                        <div class="menu-item-description">{{ dish.description }}</div>
+                        <div class="menu-item-price">{{ dish.price }} ₽</div>
+
+                        <div class="dish-actions">
+                            <a href="{{ url_for('admin_edit', dish_id=dish.id) }}" class="btn-edit">
+                                Редактировать
+                            </a>
+                            <form method="POST" action="{{ url_for('admin_delete') }}">
+                                <input type="hidden" name="dish_id" value="{{ dish.id }}">
+                                <button type="submit"
+                                        class="btn-delete-small"
+                                        onclick="return confirm('Удалить блюдо {{ dish.name }}?');">
+                                    Удалить
+                                </button>
+                            </form>
+                        </div>
+                    </div>
                 </div>
-            </div>
+            {% endfor %}
         </div>
-        {% endfor %}
-    </div>
     {% else %}
-    <div class="empty-message">
-        В этой категории пока нет блюд
-    </div>
+        <div class="empty-message">
+            В этой категории пока нет блюд
+        </div>
     {% endif %}
 </div>
 {% endblock %}

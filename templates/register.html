@@ -2,27 +2,26 @@
 
 {% block extra_css %}
 <style>
-    .auth-links {
-        text-align: center;
-        margin-top: 25px;
-        color: var(--text);
-    }
+.auth-links {
+    text-align: center;
+    margin-top: 25px;
+}
 
-    .auth-links a {
-        color: var(--primary);
-        text-decoration: none;
-        font-weight: 600;
-    }
+.auth-links a {
+    color: #ffc107;
+    text-decoration: none;
+    font-weight: 600;
+}
 
-    .auth-links a:hover {
-        color: var(--primary-dark);
-    }
+.auth-links a:hover {
+    text-decoration: underline;
+}
 </style>
 {% endblock %}
 
 {% block content %}
 <div class="auth-card">
-    <h1>📝 Регистрация</h1>
+    <h1>Регистрация</h1>
 
     {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
@@ -42,7 +41,7 @@
             {{ form.name(class="form-control" + (" is-invalid" if form.name.errors else ""), placeholder="Иван Иванов") }}
             {% if form.name.errors %}
                 {% for error in form.name.errors %}
-                    <div class="alert alert-danger mt-2">⚠️ {{ error }}</div>
+                    <div class="invalid-feedback d-block">{{ error }}</div>
                 {% endfor %}
             {% endif %}
         </div>
@@ -52,45 +51,45 @@
             {{ form.phone_number(class="form-control" + (" is-invalid" if form.phone_number.errors else ""), type="tel", placeholder="+7 (999) 999-99-99") }}
             {% if form.phone_number.errors %}
                 {% for error in form.phone_number.errors %}
-                    <div class="alert alert-danger mt-2">⚠️ {{ error }}</div>
+                    <div class="invalid-feedback d-block">{{ error }}</div>
                 {% endfor %}
             {% endif %}
         </div>
 
         <div class="mb-3">
             {{ form.email.label(class="form-label") }}
-            {{ form.email(class="form-control" + (" is-invalid" if form.email.errors else ""), type="email", placeholder="your@email.com") }}
+            {{ form.email(class="form-control" + (" is-invalid" if form.email.errors else ""), type="email", placeholder="example@email.com") }}
             {% if form.email.errors %}
                 {% for error in form.email.errors %}
-                    <div class="alert alert-danger mt-2">⚠️ {{ error }}</div>
+                    <div class="invalid-feedback d-block">{{ error }}</div>
                 {% endfor %}
             {% endif %}
         </div>
 
         <div class="mb-3">
             {{ form.password.label(class="form-label") }}
-            {{ form.password(class="form-control" + (" is-invalid" if form.password.errors else ""), type="password", placeholder="••••••••") }}
+            {{ form.password(class="form-control" + (" is-invalid" if form.password.errors else ""), type="password") }}
             {% if form.password.errors %}
                 {% for error in form.password.errors %}
-                    <div class="alert alert-danger mt-2">⚠️ {{ error }}</div>
+                    <div class="invalid-feedback d-block">{{ error }}</div>
                 {% endfor %}
             {% endif %}
         </div>
 
         <div class="mb-3">
             {{ form.password_again.label(class="form-label") }}
-            {{ form.password_again(class="form-control" + (" is-invalid" if form.password_again.errors else ""), type="password", placeholder="••••••••") }}
+            {{ form.password_again(class="form-control" + (" is-invalid" if form.password_again.errors else ""), type="password") }}
             {% if form.password_again.errors %}
                 {% for error in form.password_again.errors %}
-                    <div class="alert alert-danger mt-2">⚠️ {{ error }}</div>
+                    <div class="invalid-feedback d-block">{{ error }}</div>
                 {% endfor %}
             {% endif %}
         </div>
 
-        {{ form.submit(class="btn btn-submit", value="Зарегистрироваться") }}
+        {{ form.submit(class="btn btn-submit w-100", value="Зарегистрироваться") }}
 
         <div class="auth-links">
-            Уже есть аккаунт? <a href="/login">Войти</a>
+            Уже есть аккаунт? <a href="{{ url_for('login') }}">Войти</a>
         </div>
     </form>
 </div>

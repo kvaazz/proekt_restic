@@ -5,7 +5,6 @@ from flask_login import LoginManager, login_user, login_required, logout_user
 from data.Forms import LoginForm, RegisterForm
 from data.users import User
 from data.dishes import Dish
-from data import users_resources
 import requests
 from werkzeug.utils import secure_filename
 import time
@@ -14,7 +13,7 @@ import barcode
 from barcode.writer import ImageWriter
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
+app.config['SECRET_KEY'] = 'secret_key'
 
 login_manager = LoginManager()
 login_manager.init_app(app)
@@ -188,7 +187,6 @@ def menu():
 
     db_sess = db_session.create_session()
 
-    # Фильтруем блюда
     if current_category == 'all':
         dishes = db_sess.query(Dish).all()
     else:
@@ -226,7 +224,6 @@ def admin():
 
         db_sess = db_session.create_session()
 
-        # Фильтруем блюда
         if current_category == 'all':
             dishes = db_sess.query(Dish).all()
         else:
@@ -254,7 +251,6 @@ def admin_add():
             price = request.form.get('price')
             category = request.form.get('category')
 
-            # Валидация
             if not all([name, description, price]):
                 return redirect(url_for('admin_add'))
 
@@ -358,7 +354,7 @@ def admin_delete():
         db_sess.delete(dish)
         db_sess.commit()
 
-    return redirect(url_for('admin'))
+        return redirect(url_for('admin'))
 
     return redirect('/')
 

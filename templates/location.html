@@ -75,7 +75,6 @@
     {% endwith %}
 
     <div class="location-content">
-        <!-- Форма ввода адреса -->
         <div>
             <h3>Найти маршрут</h3>
             <form method="POST">
@@ -84,7 +83,6 @@
                 <button type="submit" class="btn-submit">Построить маршрут</button>
             </form>
 
-            <!-- Информация о ресторане -->
             <div class="location-info">
                 <h3>🍽Наш адрес</h3>
                 <div class="contact-item">
@@ -96,7 +94,6 @@
             </div>
         </div>
 
-        <!-- Карта -->
         <div class="map-container">
             <img src="{{ url_for('static', filename='upload/map.png') }}" alt="Карта расположения ресторана">
         </div>

@@ -2,128 +2,120 @@
 
 {% block extra_css %}
 <style>
+.menu-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    background: #fff;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+}
+
+.category-filters {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 30px;
+}
+
+.filter-btn {
+    padding: 8px 18px;
+    border-radius: 20px;
+    border: 1px solid #ddd;
+    background: #f5f5f5;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    color: #333;
+    transition: 0.2s ease;
+}
+
+.filter-btn:hover {
+    border-color: #ffc107;
+}
+
+.filter-btn.active {
+    background: #ffc107;
+    border-color: #ffc107;
+    color: #000;
+}
+
+.menu-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 20px;
+}
+
+.menu-item {
+    background: #f8f9fa;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid #e5e5e5;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.menu-item:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+}
+
+.menu-item-image {
+    height: 190px;
+    background: #eee;
+    overflow: hidden;
+}
+
+.menu-item-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.menu-item-content {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.menu-item-name {
+    font-size: 17px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.menu-item-description {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 12px;
+    flex: 1;
+}
+
+.menu-item-price {
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.empty-message {
+    text-align: center;
+    padding: 40px 20px;
+    background: #f8f9fa;
+    border-radius: 10px;
+    color: #666;
+}
+
+@media (max-width: 576px) {
     .menu-container {
-        max-width: 1000px;
-    }
-
-    /* Стили для кнопок категорий */
-    .category-filters {
-        display: flex;
-        gap: 10px;
-        margin-bottom: 30px;
-        justify-content: center;
-        flex-wrap: wrap;
-    }
-
-    .filter-btn {
-        background-color: var(--gray-light);
-        color: var(--text);
-        border: 2px solid var(--border);
-        padding: 8px 20px;
-        border-radius: 25px;
-        font-weight: 600;
-        text-decoration: none;
-        transition: all 0.3s;
-        font-size: 15px;
-    }
-
-    .filter-btn:hover {
-        border-color: var(--primary);
-        color: var(--text);
-    }
-
-    .filter-btn.active {
-        background-color: var(--primary);
-        border-color: var(--primary);
-        color: black;
+        padding: 25px 20px;
     }
 
     .menu-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-        gap: 25px;
+        grid-template-columns: 1fr;
     }
-
-    .menu-item {
-        background-color: var(--gray);
-        border-radius: 15px;
-        overflow: hidden;
-        box-shadow: var(--shadow-sm);
-        transition: all 0.3s;
-        border: 1px solid var(--border);
-        display: flex;
-        flex-direction: column;
-    }
-
-    .menu-item:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-    }
-
-    .menu-item-image {
-        width: 100%;
-        height: 200px;
-        background-color: #e0e0e0;
-        overflow: hidden;
-    }
-
-    .menu-item-image img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    }
-
-    .menu-item-content {
-        padding: 20px;
-        display: flex;
-        flex-direction: column;
-        flex-grow: 1;
-    }
-
-    .menu-item-name {
-        color: var(--text);
-        font-weight: 700;
-        font-size: 18px;
-        margin-bottom: 10px;
-    }
-
-    .menu-item-description {
-        color: #666;
-        font-size: 14px;
-        margin-bottom: 15px;
-        flex-grow: 1;
-    }
-
-    .menu-item-price {
-        color: var(--primary);
-        font-weight: 700;
-        font-size: 22px;
-    }
-
-    .empty-message {
-        text-align: center;
-        padding: 50px 20px;
-        color: #666;
-        font-size: 18px;
-        background-color: var(--gray-light);
-        border-radius: 12px;
-    }
-
-    @media (max-width: 576px) {
-        .category-filters {
-            gap: 8px;
-        }
-        
-        .filter-btn {
-            padding: 6px 15px;
-            font-size: 14px;
-        }
-
-        .menu-grid {
-            grid-template-columns: 1fr;
-            gap: 15px;
-        }
-    }
+}
 </style>
 {% endblock %}
 
@@ -133,7 +125,7 @@
 
     <div class="category-filters">
         {% for cat_id, cat_name in menu.categories.items() %}
-            <a href="{{ url_for('menu', category=cat_id) }}" 
+            <a href="{{ url_for('menu', category=cat_id) }}"
                class="filter-btn {% if menu.current_category == cat_id %}active{% endif %}">
                 {{ cat_name }}
             </a>
@@ -143,20 +135,21 @@
     {% if menu.dishes %}
         <div class="menu-grid">
             {% for dish in menu.dishes %}
-            <div class="menu-item">
-                <div class="menu-item-image">
-                    {% if dish.image and dish.image != 'default.jpg' %}
-                        <img src="{{ url_for('static', filename='img/' + dish.image) }}" alt="{{ dish.name }}">
-                    {% else %}
-                        <img src="{{ url_for('static', filename='img/default.jpg') }}" alt="{{ dish.name }}">
-                    {% endif %}
+                <div class="menu-item">
+                    <div class="menu-item-image">
+                        {% if dish.image and dish.image != 'default.jpg' %}
+                            <img src="{{ url_for('static', filename='img/' + dish.image) }}" alt="{{ dish.name }}">
+                        {% else %}
+                            <img src="{{ url_for('static', filename='img/default.jpg') }}" alt="{{ dish.name }}">
+                        {% endif %}
+                    </div>
+
+                    <div class="menu-item-content">
+                        <div class="menu-item-name">{{ dish.name }}</div>
+                        <div class="menu-item-description">{{ dish.description }}</div>
+                        <div class="menu-item-price">{{ dish.price }} ₽</div>
+                    </div>
                 </div>
-                <div class="menu-item-content">
-                    <div class="menu-item-name">{{ dish.name }}</div>
-                    <div class="menu-item-description">{{ dish.description }}</div>
-                    <div class="menu-item-price">{{ dish.price }} ₽</div>
-                </div>
-            </div>
             {% endfor %}
         </div>
     {% else %}
@@ -166,13 +159,3 @@
     {% endif %}
 </div>
 {% endblock %}
-<div class="form-group">
-    <label class="form-label">Категория *</label>
-    <select name="category" class="form-control" required>
-        <option value="salads">Салаты</option>
-        <option value="soups">Супы</option>
-        <option value="mains" selected>Горячее</option>
-        <option value="desserts">Десерты</option>
-        <option value="drinks">Напитки</option>
-    </select>
-</div>
