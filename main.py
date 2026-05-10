@@ -11,7 +11,6 @@ import time
 from pathlib import Path
 import barcode
 from barcode.writer import ImageWriter
-import os
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret_key'
@@ -337,7 +336,7 @@ def admin_delete():
         dish_id = request.form.get('dish_id')
 
         if not dish_id:
-            return redirect(url_for('admin'))
+              return redirect(url_for('admin'))
 
         db_sess = db_session.create_session()
         dish = db_sess.query(Dish).get(dish_id)
@@ -361,9 +360,7 @@ def admin_delete():
 
 def main():
     db_session.global_init("db/users.db")
-    port = int(os.environ.get("PORT", 5000))
-    app.run(host='0.0.0.0', port=port)
-
+    app.run(host='0.0.0.0', port=8080)
 
 if __name__ == '__main__':
     main()
