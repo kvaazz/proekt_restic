@@ -2,9 +2,23 @@
 
 {% block extra_css %}
 <style>
+html {
+    height: auto !important;
+    min-height: 100%;
+}
+
+body {
+    height: auto !important;
+    min-height: 100vh !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    display: block !important;
+    margin: 0;
+}
+
 .menu-container {
     max-width: 1100px;
-    margin: 0 auto;
+    margin: 30px auto 40px;
     background: #fff;
     padding: 40px;
     border-radius: 12px;
@@ -110,6 +124,7 @@
 @media (max-width: 576px) {
     .menu-container {
         padding: 25px 20px;
+        margin: 20px auto 30px;
     }
 
     .menu-grid {
